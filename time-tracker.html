@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracker - Database Education</title>
+    <link rel="stylesheet" href="time-tracker.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel: Time Tracker App -->
+        <div class="app-panel">
+            <div class="app-header">
+                <h1>⏱️ Time Tracker</h1>
+                <p class="current-time" id="currentTime">00:00:00</p>
+            </div>
+
+            <div class="app-content">
+                <!-- Active Timer -->
+                <section class="active-timer-section" id="activeTimerSection" style="display: none;">
+                    <h2>Currently Tracking</h2>
+                    <div class="active-timer" id="activeTimer">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Add New Task -->
+                <section class="add-task-section">
+                    <h2>Add New Task</h2>
+                    <form id="addTaskForm">
+                        <div class="form-group">
+                            <label for="taskName">Task Name</label>
+                            <input type="text" id="taskName" placeholder="e.g., Design homepage" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="taskCategory">Category</label>
+                            <select id="taskCategory">
+                                <option value="development">💻 Development</option>
+                                <option value="design">🎨 Design</option>
+                                <option value="meeting">📅 Meeting</option>
+                                <option value="research">🔍 Research</option>
+                                <option value="writing">✍️ Writing</option>
+                                <option value="admin">📋 Admin</option>
+                                <option value="learning">📚 Learning</option>
+                                <option value="other">📦 Other</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Add Task</button>
+                    </form>
+                </section>
+
+                <!-- Active Tasks -->
+                <section class="tasks-section">
+                    <h2>Active Tasks</h2>
+                    <div id="activeTasks" class="tasks-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- Completed Tasks -->
+                <section class="tasks-section completed-section">
+                    <h2>Completed Tasks</h2>
+                    <div id="completedTasks" class="tasks-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Right Panel: Database Visualization -->
+        <div class="db-panel">
+            <div class="db-header">
+                <div class="db-header-row">
+                    <div>
+                        <h1>🗄️ Database Tables</h1>
+                        <p class="db-subtitle">See the data behind the app</p>
+                    </div>
+                    <button class="btn-erd" id="openErdBtn">View ERD Diagram</button>
+                </div>
+            </div>
+
+            <div class="db-content">
+                <!-- Tasks Table -->
+                <div class="db-table-container">
+                    <div class="table-header">
+                        <h3>📋 tasks</h3>
+                        <span class="row-count" id="tasksCount">0 rows</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="tasksTable">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>name</th>
+                                    <th>category</th>
+                                    <th>status</th>
+                                    <th>total_time</th>
+                                    <th>created_at</th>
+                                    <th>completed_at</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tasksTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Work Sessions Table -->
+                <div class="db-table-container">
+                    <div class="table-header">
+                        <h3>⏰ work_sessions</h3>
+                        <span class="row-count" id="sessionsCount">0 rows</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="sessionsTable">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>task_id</th>
+                                    <th>started_at</th>
+                                    <th>ended_at</th>
+                                    <th>duration</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sessionsTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Query Log -->
+                <div class="db-table-container query-log-container">
+                    <div class="table-header">
+                        <h3>📜 Query Log</h3>
+                        <button class="btn-clear" id="clearQueryLog">Clear</button>
+                    </div>
+                    <div class="query-log" id="queryLog">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ERD Modal -->
+    <div class="modal-overlay" id="erdModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Entity Relationship Diagram</h2>
+                <button class="modal-close" id="closeErdBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="erd-container">
+                    <!-- Tasks Table -->
+                    <div class="erd-table" id="erd-tasks">
+                        <div class="erd-table-header">tasks</div>
+                        <div class="erd-table-body">
+                            <div class="erd-column">
+                                <span class="erd-key">PK</span>
+                                <span class="erd-col-name">id</span>
+                                <span class="erd-col-type">INTEGER</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">name</span>
+                                <span class="erd-col-type">VARCHAR(255)</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">category</span>
+                                <span class="erd-col-type">VARCHAR(50)</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">status</span>
+                                <span class="erd-col-type">VARCHAR(20)</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">total_time</span>
+                                <span class="erd-col-type">INTEGER</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">created_at</span>
+                                <span class="erd-col-type">TIMESTAMP</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">completed_at</span>
+                                <span class="erd-col-type">TIMESTAMP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connection Line -->
+                    <div class="erd-connection">
+                        <div class="erd-line"></div>
+                        <div class="erd-relationship">
+                            <span class="erd-cardinality left">1</span>
+                            <span class="erd-rel-label">has many</span>
+                            <span class="erd-cardinality right">N</span>
+                        </div>
+                    </div>
+
+                    <!-- Work Sessions Table -->
+                    <div class="erd-table" id="erd-sessions">
+                        <div class="erd-table-header">work_sessions</div>
+                        <div class="erd-table-body">
+                            <div class="erd-column">
+                                <span class="erd-key">PK</span>
+                                <span class="erd-col-name">id</span>
+                                <span class="erd-col-type">INTEGER</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key fk">FK</span>
+                                <span class="erd-col-name">task_id</span>
+                                <span class="erd-col-type">INTEGER</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">started_at</span>
+                                <span class="erd-col-type">TIMESTAMP</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">ended_at</span>
+                                <span class="erd-col-type">TIMESTAMP</span>
+                            </div>
+                            <div class="erd-column">
+                                <span class="erd-key"></span>
+                                <span class="erd-col-name">duration</span>
+                                <span class="erd-col-type">INTEGER</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="erd-legend">
+                    <h3>Legend</h3>
+                    <div class="erd-legend-items">
+                        <div class="erd-legend-item">
+                            <span class="erd-key">PK</span>
+                            <span>Primary Key - Unique identifier for each row</span>
+                        </div>
+                        <div class="erd-legend-item">
+                            <span class="erd-key fk">FK</span>
+                            <span>Foreign Key - References another table's primary key</span>
+                        </div>
+                        <div class="erd-legend-item">
+                            <span class="erd-cardinality-example">1 : N</span>
+                            <span>One-to-Many relationship (one task can have many work sessions)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="time-tracker.js"></script>
+</body>
+</html>
