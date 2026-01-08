@@ -1,0 +1,299 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: dark --default;
+}
+
+/* Override DaisyUI dark theme with custom monochromatic colors */
+:root {
+    color-scheme: dark;
+
+    /* Base colors - Vercel-inspired dark */
+    --color-base-100: #000000;
+    --color-base-200: #0a0a0a;
+    --color-base-300: #171717;
+    --color-base-content: #ededed;
+
+    /* Neutral */
+    --color-neutral: #262626;
+    --color-neutral-content: #a1a1a1;
+
+    /* Primary - subtle gray */
+    --color-primary: #404040;
+    --color-primary-content: #fafafa;
+
+    /* Secondary */
+    --color-secondary: #333333;
+    --color-secondary-content: #e5e5e5;
+
+    /* Accent */
+    --color-accent: #525252;
+    --color-accent-content: #fafafa;
+
+    /* Status colors */
+    --color-success: #22c55e;
+    --color-success-content: #000000;
+    --color-warning: #eab308;
+    --color-warning-content: #000000;
+    --color-error: #ef4444;
+    --color-error-content: #000000;
+    --color-info: #3b82f6;
+    --color-info-content: #000000;
+}
+
+/* Force dark background on html and body */
+html, body {
+    background-color: #000000;
+    color: #ededed;
+}
+
+/* Custom font */
+@theme {
+    --font-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+/* Global styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333333;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #525252;
+}
+
+/* Row animations for database tables */
+@keyframes row-insert {
+    0% {
+        background: rgba(34, 197, 94, 0.3);
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+    30% {
+        background: rgba(34, 197, 94, 0.3);
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        background: transparent;
+    }
+}
+
+@keyframes row-update {
+    0% { background: rgba(234, 179, 8, 0.3); }
+    100% { background: transparent; }
+}
+
+@keyframes row-delete {
+    0% {
+        background: rgba(239, 68, 68, 0.3);
+        opacity: 1;
+    }
+    100% {
+        background: rgba(239, 68, 68, 0.3);
+        opacity: 0;
+        transform: translateX(10px);
+    }
+}
+
+.row-insert { animation: row-insert 0.8s ease-out; }
+.row-update { animation: row-update 0.6s ease-out; }
+.row-delete { animation: row-delete 0.5s ease-out forwards; }
+
+/* Row highlight for relationship visualization */
+.row-highlight {
+    background: rgba(59, 130, 246, 0.15) !important;
+    outline: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.row-highlight-related {
+    background: rgba(236, 72, 153, 0.15) !important;
+    outline: 1px solid rgba(236, 72, 153, 0.4);
+}
+
+/* SQL syntax highlighting */
+.sql-keyword { color: #ef4444; }
+.sql-table { color: #22c55e; }
+.sql-value { color: #3b82f6; }
+
+/* Data type styling */
+.data-null { color: #525252; font-style: italic; }
+.data-id { color: #f59e0b; font-weight: 600; }
+.data-fk { color: #ec4899; text-decoration: underline dotted; }
+.data-date { color: #a78bfa; }
+.data-number { color: #38bdf8; }
+
+/* ERD key badges */
+.erd-pk {
+    background: #f59e0b;
+    color: #000000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.erd-fk {
+    background: #ec4899;
+    color: #000000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* Force dark mode on all major containers */
+.bg-base-100 { background-color: #000000 !important; }
+.bg-base-200 { background-color: #0a0a0a !important; }
+.bg-base-300 { background-color: #171717 !important; }
+.text-base-content { color: #ededed !important; }
+.text-neutral-content { color: #a1a1a1 !important; }
+.border-neutral { border-color: #262626 !important; }
+
+/* Modal dark styling */
+.modal-box {
+    background-color: #0a0a0a !important;
+    border: 1px solid #262626;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Input dark styling */
+.input, .select {
+    background-color: #171717 !important;
+    border-color: #262626 !important;
+    color: #ededed !important;
+}
+
+.input:focus, .select:focus {
+    border-color: #525252 !important;
+    outline: none !important;
+}
+
+/* Button styling */
+.btn {
+    border-color: #262626;
+}
+
+.btn-primary {
+    background-color: #ededed !important;
+    color: #000000 !important;
+    border: none !important;
+}
+
+.btn-primary:hover {
+    background-color: #d4d4d4 !important;
+}
+
+.btn-ghost {
+    color: #a1a1a1;
+}
+
+.btn-ghost:hover {
+    background-color: #171717;
+    color: #ededed;
+}
+
+.btn-outline {
+    border-color: #333333 !important;
+    color: #a1a1a1 !important;
+    background: transparent !important;
+}
+
+.btn-outline:hover {
+    background-color: #171717 !important;
+    color: #ededed !important;
+    border-color: #525252 !important;
+}
+
+/* Dropdown dark styling */
+.dropdown-content {
+    background-color: #0a0a0a !important;
+    border: 1px solid #262626 !important;
+}
+
+.menu li a:hover {
+    background-color: #171717 !important;
+}
+
+/* Table styling */
+.table {
+    color: #ededed;
+}
+
+.table th {
+    background-color: #171717 !important;
+    color: #a1a1a1 !important;
+    border-bottom-color: #262626 !important;
+}
+
+.table td {
+    border-bottom-color: #1a1a1a !important;
+}
+
+.table tr:hover td {
+    background-color: #0a0a0a !important;
+}
+
+/* Badge styling */
+.badge {
+    border: none;
+}
+
+.badge-success {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+    color: #22c55e !important;
+}
+
+.badge-info {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+    color: #3b82f6 !important;
+}
+
+.badge-warning {
+    background-color: rgba(234, 179, 8, 0.2) !important;
+    color: #eab308 !important;
+}
+
+.badge-error {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    color: #ef4444 !important;
+}
+
+.badge-neutral {
+    background-color: #262626 !important;
+    color: #a1a1a1 !important;
+}
+
+/* Code explanation modal styling */
+.code-block {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    white-space: pre;
+    line-height: 1.5;
+}
+
+.code-block code {
+    color: #e5e5e5;
+}
+
+/* Keyboard shortcut styling */
+.kbd {
+    background-color: #262626 !important;
+    border-color: #404040 !important;
+    color: #ededed !important;
+}
