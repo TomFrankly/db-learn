@@ -1,4 +1,5 @@
 // ==================== MAIN APP CONTROLLER ====================
+// DB Learn v1.0 - Educational Database Tools
 
 let currentTool = null;
 

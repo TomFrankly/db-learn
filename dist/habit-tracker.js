@@ -1,4 +1,5 @@
 // ==================== HABIT TRACKER MODULE ====================
+// DB Learn v1.0 - Habit tracking with database visualization
 
 const HabitTracker = {
     STORAGE_KEY: 'habitTrackerDB',

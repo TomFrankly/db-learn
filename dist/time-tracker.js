@@ -1,4 +1,5 @@
 // ==================== TIME TRACKER MODULE ====================
+// DB Learn v1.0 - Time tracking with database visualization
 
 const TimeTracker = {
     STORAGE_KEY: 'timeTrackerDB',

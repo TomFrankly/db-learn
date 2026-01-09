@@ -1,4 +1,5 @@
 // ==================== SHARED DATABASE VISUALIZATION ====================
+// DB Learn v1.0 - Shared utilities and rendering
 
 // Format SQL with syntax highlighting
 function formatSql(sql) {
